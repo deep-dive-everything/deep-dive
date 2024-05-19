@@ -23,3 +23,11 @@ F
 1주차/hyunkyung/4.md,5/e/5e555928e5beaaacd4dcf5217b711e8a5c525edf
 8
 index.js,a/7/a77b15c0d64cf6111e025645e562faf8ccabb9d7
+D
+1주차/seokyoung.md,d/c/dc274e11ff7c4c3354b9ff484c039d4acf04cbbb
+@
+1주차/gyeol.md,e/f/ef9f094ee5ce9a9e8d47418c4abcd89bf84492af
+@
+1주차/dasom.md,f/b/fbdcedad586f3b4c71acf334cf4547bacfb2e845
+D
+1주차/hyunkyung.md,3/f/3f8b89212cb2a17301925d05734ce339a7b5a827
