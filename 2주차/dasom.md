@@ -344,6 +344,35 @@ Dasom, 2024.05.26
 -> 즉, 값이 바뀌는 것이 아니라 값은 새롭게 생성되고 변수의 참조 주소가 바뀌는 것
 
 
+** 공유하고 싶은 내용**
+
+조건문을 작성하다보면 if() 안에 많은 내용을 담게 되는 경우가 있다.
+
+예를 들어, 
+
+```js
+
+const is_true = true; // type: true | false
+const obj = {
+  code: "human", // type: "human" | "animal" | "others"
+  age: 20, // type: number
+  name: "Kim" // type: string
+}
+
+if( obj.age < 20 || obj.code !== "human" || is_true){
+  console.log("hello")
+}
+```
+
+이러한 조건식을 세울 때,
+
+빠르게 판별할 수 있는 조건을 앞쪽에 배치하는 것이 좋다.
+
+위의 예시에서는 is_true가 boolean이기 때문에, obj.code나 obj.age보다 적은 경우의 수를 가진다.
+
+이런 것들을 조건의 앞쪽에 배치함으로써 약간의 성능 향상을 꾀해볼 수 있겠다.
+
+실제로 기능 추가가 되면서 조건이 늘어날 때, 자주 놓치게 되는 부분인데 염두해두면 좋을 것 같다!
 
 
 
