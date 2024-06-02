@@ -4,8 +4,8 @@
 
 - 일련의 과정을 문으로 구현하고 코드 블록으로 감싸서 하나의 실행 단위로 정의한 것이다.
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7d5bae4c-3419-4df1-a2d1-d33c9f921884/127349cd-335c-4e87-9594-eb500f7893c3/Untitled.png)
-    
+    ![image](https://github.com/deep-dive-to-javascript/deep-dive/assets/66353188/1bccd72d-436d-4946-8f08-f9b6f3674eca)
+
     - 매개변수 - 함수 내부로 입력을 전달받는 변수
     - 입력 - 인수
     - 출력 - 반환값
@@ -162,7 +162,8 @@ console.log(person); // {name:"Kim"}
 - 원시 타입 인수를 전달 받은 매개변수 primitive의 경우 원시 값은 변경 불가능한 값이므로 직접 변경이 불가능하기 때문에 재할당을 통해 할당된 원시 값을 새로운 원시 값으로 교체
 - 객체 타입 인수를 전달받은 매개변수 obj의 경우 객체는 변경 가능한 값이므로 직접 변경할 수 있기 때문에 재할당 없이 직접 할당된 객체를 변경
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7d5bae4c-3419-4df1-a2d1-d33c9f921884/6d1a96d5-2508-4f01-974a-3f8af81892de/Untitled.png)
+![image](https://github.com/deep-dive-to-javascript/deep-dive/assets/66353188/e8b579b6-561c-4194-878f-3479728d8050)
+
     
 - 의도치 않은 객체의 변경을 방지하기 위해서 객체를 불변 객체로 만들어서 사용할 수 있다. 
 객체의 복사본을 새롭게 생성하는 비용은 들지만 객체를 원시 값처럼 변경 불가능한 값으로 동작하게 만들 수 있다.
@@ -262,13 +263,13 @@ console.log(person); // {name:"Kim"}
 
 ### 14.1.1 지역 변수의 생명주기
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7d5bae4c-3419-4df1-a2d1-d33c9f921884/c6e9361a-ee92-4ac3-8837-f7ca078ceb95/Untitled.png)
+![image](https://github.com/deep-dive-to-javascript/deep-dive/assets/66353188/73c148a9-ab80-47b2-8117-3d8edd523f57)
 
 - 지역 변수의 생명 주기는 함수의 생명주기와 일치한다.
 
 ### 14.1.2 전역 변수의 생명 주기
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7d5bae4c-3419-4df1-a2d1-d33c9f921884/46193b27-2f9a-4caa-a4e1-26840d42a4f1/Untitled.png)
+![image](https://github.com/deep-dive-to-javascript/deep-dive/assets/66353188/9caf5cf7-baf6-4df6-85a6-fa8cdb10fb12)
 
 - 전역 코드는 함수 호출과 같이 전역 코드를 실행하는 특별한 진입점이 없고 코드가 로드되자마자 곧바로 해석되고 실행된다.
 - var 키워드로 선언한 전역 변수의 생명주기는 전역 객체의 생명주기와 일치한다.
@@ -337,3 +338,8 @@ console.log(person); // {name:"Kim"}
 - **const 키워드는 재할당을 금지할 뿐 불변을 의미하지는 않는다.**
 
 ✅ **자바스크립트는 ES6에서 도입된  let, const를 포함한 모든 선언이 호이스팅된다. 단 ES6 에서 도입된 let, const, class를 사용한 선언문은 호이스팅이 발생하지 않는 것처럼 동작한다.**
+
+# 💬 느낀점
+- 평소 다른 개발자분들이 함수프로그래밍에 대해 얘기하는 걸 보고 공부의 필요성을 느꼈었는데 이 책에서 순수함수, 비순수함수 등 함수 프로그래밍에 대한 내용을 조금이라도 공부할 수 있어서 좋았다!
+- 책에서 바람직한 개발방법에 대해 이것저것 제시해줘서 평소에 내가 어떻게 개발을 하고 있었는지에 대해 다시 한 번 생각해볼 수 있었다. (그냥 개발하지 말고! 생각을 하며 개발을 하자!! )
+- ES6 모듈은 평소에 자주 안 써봤기 때문에 시간을 내서 한번 더 공부 해보고 직접 사용해봐야겠다고 느꼈다!
