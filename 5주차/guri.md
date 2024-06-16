@@ -604,3 +604,8 @@ for(const key in person){
 ### 6.2 arguments 객체
 
 - strict mode에서는 매개변수에 전달된 인수를 재할당해 변경해도 arguments객체에 반영되지 않음.
+
+# 느낀점
+
+업무에서 실제로 사용해본적이 없어 와닿지 않고 어렵게 느껴졌습니다. 그리고 특정 단어들이 계속 반복되는데 이게 섞이고 헷갈려서 읽는데 좀 힘들었습니다. 어렵게 느껴져서 유튜브에서 강의를 찾아봤는데 코딩애플씨의 영상이 핵심을 짧게 정리해줘서 갈피를 잡는데 도움이 된 것 같습니다.
+https://youtu.be/wUgmzvExL_E?si=YRIudbhMxuZg_aJb
