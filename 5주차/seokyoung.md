@@ -436,36 +436,428 @@ console.log(Person.prototype === Object.getPrototypeOf(me)) // true
 
 ### 19.10 instanceof 연산자
 
+- instance 연산자는 이항 연산자로서 좌변에 객체를 가리키는 식별자, 우변에 생성자 함수를 가리키는 식별자를 피연산자로 받는다.
+- 만약 우변의 피연산자가 함수가 아닌 경우 TypeError가 발생한다.
+- **우변의 생성자 함수의 prototype에 바인딩된 객체가 좌변의 객체의 프로토타입 체인 상에 존재하면 true로 평가되고, 그렇지 않은 경우에는 false로 평가된다.**
+
+```js
+객체 instanceof 생성자 함수
+```
+
+- instanceof 연산자는 프로토타입의 constructor 프로퍼티가 가리키는 생성자 함수를 찾는 것이 아니라 **생성자 함수의 prototype에 바인딩된 객체가 프로토타입 체인 상에 존재하는지 확인한다.**
+
+```js
+function Person(name) {
+  this.name = name
+}
+
+const me = new Person('Lee')
+
+// 프로토타입의 교체
+const parent = {}
+Object.setPrototypeOf(me, parent)
+
+// Person 생성자 함수와 parent 객체는 연결되어 있지 않다.
+console.log(Person.prototype === parent) // false
+console.log(parent.constructor === Person) // false
+
+// parent 객체를 Person 생성자 함수의 prototype 프로퍼티에 바인딩한다.
+Person.prototype = parent
+
+// Person.prototype이 me 객체의 프로토타입 체인 상에 존재하므로 true로 평가된다.
+console.log(me instanceof Person) // true
+// Object.prototype이 me 객체의 프로토타입 체인 상에 존재하므로 true로 평가된다.
+console.log(me instanceof Object) // true
+```
+
+- 따라서 생성자 함수에 의해 프로토타입이 교체되어도 constructor 프로퍼티와 생성자 함수 간의 연결이 파괴되어도 생성자 함수의 prototype 프로퍼티와 프로토타입 간의 연결은 파괴되지 않으므로 instanceof는 아무런 영향을 받지 않는다.
+
+```js
+const Person = (function () {
+  function Person(name) {
+    this.name = name
+  }
+
+  // 생성자 함수의 prototype 프로퍼티를 통해 프로토타입을 교체
+  Person.prototype = {
+    sayHello() {
+      console.log(`Hi! My name is ${this.name}`)
+    },
+  }
+
+  return Person
+})()
+
+const me = new Person('Lee')
+
+// constructor 프로퍼티와 생성자 함수 간의 연결은 파괴되어도 instanceof는 아무런 영향을 받지 않는다.
+console.log(me.constructor === Person) // false
+
+// Person.prototype이 me 객체의 프로토타입 체인 상에 존재하므로 true로 평가된다.
+console.log(me instanceof Person) // true
+// Object.prototype이 me 객체의 프로토타입 체인 상에 존재하므로 true로 평가된다.
+console.log(me instanceof Object) // true
+```
+
 ### 19.11 직접 상속
 
 #### 19.11.1 Object.create에 의한 직접 상속
 
+- Object.create 메서드는 명시적으로 프로토타입을 지정하여 새로운 객체를 생성한다.
+- 다른 객체 생성 방식과 마찬가지로 추상 연산 OrdinaryObjectCreate를 호출한다.
+
+```js
+/**
+ * 지정된 프로토타입 및 프로퍼티를 갖는 새로운 객체를 생성하여 반환한다.
+ * @param {Object} prototype - 생성할 객체의 프로토타입으로 지정할 객체
+ * @param {Object} [propertiesObject] - 생성할 객체의 프로퍼티를 갖는 객체
+ * @returns {Object} 지정된 프로토타입 및 프로퍼티를 갖는 새로운 객체
+ */
+```
+
+- `Object.create` 메서드는 첫 번째 매개변수에 전달한 객체의 프로토타입 체인에 속하는 객체를 생성한다. 즉, 객체를 생성하면서 직접적으로 상속을 구현한다.
+- `Ojbect.create` 메서드의 장점
+  - new 연산자가 없어도 객체를 생성할 수 있다.
+  - 프로토타입을 지정하면서 객체를 생성할 수 있다
+  - 객체 리터럴에 의해 생성된 객체도 상속받을 수 있다.
+
+```js
+let obj = Object.create(null)
+console.log(Object.getPrototypeOf(obj) === null) // true
+console.log(obj.toString()) // TypeError: obj.toString is not a function
+
+obj = Object.create(Object.prototype) // obj = {}
+console.log(Object.getPrototypeOf(obj) === Object.prototype) // true
+
+obj = Object.create(Object.prototype, {
+  x: { value: 1, writable: true, enumerable: true, configurable: true },
+})
+console.log(obj.x) // 1
+console.log(Object.getPrototypeOf(obj) === Object.prototype) // true
+
+const myProto = { x: 10 }
+obj = Object.create(myProto)
+console.log(obj.x) // 10
+console.log(Object.getPrototypeOf(obj) === myProto) // true
+
+function Person(name) {
+  this.name = name
+}
+
+obj = Object.create(Person.prototype)
+obj.name = 'Lee'
+console.log(obj.name) // Lee
+console.log(Object.getPrototypeOf(obj) === Person.prototype) // true
+```
+
+- Object.prototype의 빌트인 메서드는 모든 객체의 프로토타입 체인의 종점, 즉 Obejct.prototype의 메서드이므로 모든 객체가 상속받아 호출할 수 있다.
+- ESLint에서는 Object.prototype의 빌트인 메서드를 객체가 직접 호출하는 것을 권장하지 않는다.
+- Ojbect.create 메서드를 통해 프로토타입이 null인 객체, 즉 프로토타입 체인의 종점에 위치하는 객체를 생성할 수 있기 때문이다.
+
+```js
+const obj = Object.create(null)
+obj.a = 1
+
+console.log(Object.getPrototypeOf(obj) === null) // true
+console.log(obj.hasOwnProperty('a')) // TypeError: obj.hasOwnProperty is not a function
+```
+
+- 따라서 이 같은 에러를 발생시킬 위험을 없애기 위해 Object.prototype의 빌트인 메서드는 간접적으로 호출하는 것이 좋다.
+
+```js
+const obj = Object.create(null)
+obj.a = 1
+
+console.log(Object.prototype.hasOwnProperty.call(obj, 'a')) // true
+```
+
 #### 19.11.2 객체 리터럴 내부에서 \_\_proto\_\_에 의한 직접 상속
 
+- 객체 리터럴 내부에서 **proto** 접근자 프로퍼티를 사용하여 직접 상속을 구현할 수 있다. (ES6)
+
+```js
+const myProto = { x: 10 }
+
+const obj = {
+  y: 20,
+  __proto__: myProto,
+}
+
+/* 
+const obj = Object.create(myProto, {
+  y: { value: 20, writable: true, enumerable: true, configurable: true }
+});
+*/
+
+console.log(obj.x, obj.y) // 10 20
+console.log(Object.getPrototypeOf(obj) === myProto) // true
+```
+
 ### 19.12 정적 프로퍼티/메서드
+
+> [!NOTE]
+> 정적 프로퍼티/메서드는 생성자 함수로 인스턴스를 생성하지 않아도 참조/호출할 수 있는 프로퍼티/메서드를 말한다.
+
+- 정적 프로퍼티/메서드는 생성자 함수가 생성한 인스턴스로 참조/호출할 수 없다.
+- 정적 프로퍼티/메서드는 인스턴스의 프로토타입 체인에 속한 객체의 프로퍼티/메서드가 아니므로 인스턴스로 접근할 수 없다.
+
+```js
+// Object.create - 정적 메서드
+const obj = Object.create({ name: 'Lee' })
+
+// Object.prototype.hasOwnProperty - 프로토타입 메서드
+obj.hasOwnProperty('name') // -> false
+```
+
+- 만약 인스턴스/프로토타입 메서드 내에서 this를 사용하지 않는다면 그 메서드는 정적 메서드로 변경할 수 있다.
+- 프로퍼티 메서드를 호출하려면 인스턴스를 생성해야 하지만 정적 메서드는 인스턴스를 생성하지 않아도 호출할 수 있다.
+
+```js
+function Foo() {}
+
+Foo.prototype.x = function () {
+  console.log('x')
+}
+
+const foo = new Foo()
+foo.x() // x
+
+Foo.x = function () {
+  console.log('x')
+}
+
+Foo.x() // x
+```
+
+- MDN 문서에서는 정적 프로퍼티/메서드와 프로토타입 프로퍼티/메서드를 구분하여 소개하고 있다.
+- 따라서 표기법만으로도 정적 프로퍼티/메서드와 프로토타입 프로퍼티/메서드를 구별할 수 있어야 한다.
+- 참고로 프로토타입 프로퍼티/메서드를 표기할 때 prototype을 #으로 표기하는 경우도 있다.
+  - `Object.prototype.isPrototypeOf` -> `Object#isPrototypeOf`
 
 ### 19.13 프로퍼티 존재 확인
 
 #### 19.13.1 in 연산자
 
+- in 연산자는 객체 내에 특정 프로퍼티가 존재하는 여부를 확인한다.
+
+```js
+const person = {
+  name: 'Lee',
+  address: 'Seoul',
+}
+
+console.log('name' in person) // true
+console.log('address' in person) // true
+console.log('age' in person) // false
+```
+
+- in 연산자는 확인 대상 객체의 프로퍼티뿐만 아니라 확인 대상 객체가 상속받은 모든 프로토타입의 프로퍼티를 확인하므로 주의가 필요하다.
+- 이는 in 연산자가 확인 대상 객체가 속한 프로토타입 체인 상에 존재하는 모든 프로토타입에서 해당 프로퍼티를 검색했기 때문이다.
+
+```js
+console.log('toString' in person) // true
+```
+
+- in 연산자 대신 ES6에서 도입된 Reflect.has 메서드를 사용할 수도 있다.
+
+```js
+const person = { name: 'Lee' }
+
+console.log(Reflect.has(person, 'name')) // true
+console.log(Reflect.has(person, 'toString')) // true
+```
+
 #### 19.13.2 Object.prototype.hasOwnProperty 메서드
+
+- `Object.prototype.hasOwnProperty` 메서드는 인수로 전달받은 프로퍼티 키가 객체 고유의 프로퍼티 키인 경우에만 true를 반환하고 상속받은 프로토타입의 프로퍼티 키인 경우 false를 반환한다.
+
+```js
+console.log(person.hasOwnProperty('name')) // true
+console.log(person.hasOwnProperty('age')) // false
+console.log(person.hasOwnProperty('toString')) // false
+```
 
 ### 19.14 프로퍼티 열거
 
 #### 19.14.1 for...in 문
 
+- 객체의 모든 프로퍼티를 순회하며 *열거*하려면 for...in 문을 사용한다.
+
+```js
+for (변수선언문 in 객체) { ... }
+```
+
+- for...in 문은 객체의 프로퍼티 개수만큼 순회하며 for...in 문의 변수 선언문에서 선언한 변수에 프로퍼티 키를 할당한다.
+
+```js
+const person = {
+  name: 'Lee',
+  address: 'Seoul',
+}
+
+// for...in 문의 변수 key에 person 객체의 프로퍼티 키가 할당된다.
+for (const key in person) {
+  console.log(key + ': ' + person[key])
+}
+// name: Lee
+// address: Seoul
+```
+
+- for...in 문은 in 연산자처럼 순회 대상 객체의 프로퍼티뿐만 아니라 상속받은 프로토타입의 프로퍼티까지 열거한다.
+- for...in 문은 객체의 프로토타입 체인 상에 존재하는 모든 프로토타입의 프로퍼티 중에서 프로퍼티 어트리뷰트 [[Enumerable]]의 값이 true인 프로퍼티를 순회하며 열거한다.
+
+```js
+const person = {
+  name: 'Lee',
+  address: 'Seoul',
+  __proto__: { age: 20 },
+}
+
+console.log('toString' in person) // true
+
+for (const key in person) {
+  console.log(key + ': ' + person[key])
+}
+// name: Lee
+// address: Seoul
+// age: 20
+```
+
+- for...in 문은 프로퍼티 키가 심벌인 프로퍼티는 열거하지 않는다.
+
+```js
+const sym = Symbol()
+const obj = {
+  a: 1,
+  [sym]: 10,
+}
+
+for (const key in obj) {
+  console.log(key + ': ' + obj[key])
+}
+// a: 1
+```
+
+- 상속받은 프로퍼티는 제외하고 객체 자신의 프로퍼티만 열거하려면 Object.prototype.hasOwnProperty 메서드를 사용하여 객체 자신의 프로퍼티인지 확인해야 한다.
+- for...in 문은 프로퍼티를 열거할 때 순서를 보장하지 않는다. 하지만 대부분의 모던 브라우저는 순서를 보장하고 숫자(사실은 문자열)인 프로퍼티 키에 대해서는 정렬을 실시한다.
+- 배열에는 for...in 문을 사용하지 말고 일반적인 for 문이나 for...of 문 또는 `Array.prototype.forEach` 메서드를 사용하기를 권장한다.
+- 사실은 배열도 객체이므로 프로퍼티와 상속받은 프로퍼티가 포함될 수 있다.
+
+```js
+const arr = [1, 2, 3]
+arr.x = 10 // 배열도 객체이므로 프로퍼티를 가질 수 있다.
+
+for (const i in arr) {
+  console.log(arr[i]) // 1 2 3 10
+}
+
+for (let i = 0; i < arr.length; i++) {
+  console.log(arr[i]) // 1 2 3
+}
+
+arr.forEach(v => console.log(v)) // 1 2 3
+
+// for...of는 변수 선언문에서 선언한 변수에 키가 아닌 값을 할당한다.
+for (const value of arr) {
+  console.log(value) // 1 2 3
+}
+```
+
 #### 19.14.2 Object.keys/values/entries 메서드
+
+```js
+const person = {
+  name: 'Lee',
+  address: 'Seoul',
+  __proto__: { age: 20 },
+}
+```
+
+- `Object.keys` 메서드는 객체 자신의 열거 가능한 프로퍼티 키를 배열로 반환한다.
+
+```js
+console.log(Object.keys(person)) // ["name", "address"]
+```
+
+- `Object.values` 메서드는 객체 자신의 열거 가능한 프로퍼티 값을 배열로 반환한다.
+
+```js
+console.log(Object.values(person)) // ["Lee", "Seoul"]
+```
+
+- `Object.entries` 메서드는 객체 자신의 열거 가능한 프로퍼티 키와 값의 쌍의 배열을 배열에 담아 반환한다.
+
+```js
+console.log(Object.entries(person)) // [["name", "Lee"], ["address", "Seoul"]]
+```
 
 ## 20장 strict mode
 
 ### 20.1 strict mode란?
 
+```js
+function foo() {
+  x = 10
+}
+foo()
+
+console.log(x) // 10
+```
+
+- 전역 스코프에도 `x` 변순의 선언이 존재하지 않기 때문에 `ReferenceError`를 발생시킬 것 같지만 자바스크립 엔진은 암묵적으로 전역 객체에 `x` 프로퍼티를 동적 생성한다.
+- 이때 전역 객체의 `x` 프로퍼티는 마치 전역 변수처럼 사용할 수 있다. 이러한 현상을 **암묵적 전역**이라 한다.
+- 개발자의 의도와는 상관없이 발생한 암묵적 전역은 오류를 발생시키는 원인이 될 가능성이 크다.
+- ES5부터 추가된 strict mode는 자바스크립트 언어의 문법을 좀 더 엄격히 적용하여 오류를 발생시킬 가능성이 높거나 자바스크립트 엔진의 최적화 작업에 문제를 일으킬 수 있는 코드에 대해 명시적인 에러를 발생시킨다.
+- ESLint 같은 도구는 strict mode가 제한하는 오류는 물론 코딩 컨벤션을 설정 파일 형태로 정의하고 강제할 수 있기 때문에 더욱 강력한 효과를 얻을 수 있다.
+- ES6에서 도입된 클래스와 모듈은 기본적으로 strict mode가 적용된다.
+
 ### 20.2 strict mode의 적용
+
+- strict mode를 적용하려면 전역의 선두 또는 함수 몸체의 선두에 'use strict'를 추가한다.
+- 전역의 선두에 추가하면 스크립트 전체에 strict mode가 적용된다.
+- 함수 몸체의 선두에 추가하면 해당 함수와 중첩 함수에 strict mode가 적용된다.
+- 코드의 선두에 'use strict'를 위치시키지 않으면 strict mode가 제대로 동작하지 않는다.
 
 ### 20.3 전역에 strict mode를 적용하는 것은 피하자
 
+- 전역에 적용한 strict mode는 스크립트 단위로 적용된다.
+- 스크립트 단위로 적용된 strict mode는 다른 스크립트에 영향을 주지 않고 해당 스크립트에 한정되어 적용된다.
+- 하지만 strict mode 스크립트와 non-strict mode 스크립트를 혼용하는 것은 오류를 발생시킬 수 있다.
+- 이러한 경우 즉시 실행 함수로 스크립트 전체를 감싸서 스코프를 구분하고 즉시 실행 함수의 선두에 strict mode를 적용한다.
+
 ### 20.4 함수 단위로 strict mode를 적용하는 것도 피하자
+
+- 어떤 함수는 strict mode를 적용하고 어떤 함수는 strict mode를 적용하지 않는 것은 바람직하지 않다.
+- 또한 strict mode가 적용된 함수가 참조할 함수 외부의 컨텍스트에 strict mode를 적용하지 않는다면 이 또한 문제가 발생할 수 있다.
+- 따라서 strict mode는 즉시 실행 함수로 감싼 스크립트 단위로 적용하는 것이 바람직하다.
 
 ### 20.5 strict mode가 발생시키는 에러
 
+#### 1. 암묵적 전역
+
+- 선언하지 않은 변수를 참조하면 `ReferenceError`가 발생한다.
+
+#### 2. 변수, 함수, 매개변수의 삭제
+
+- delete 연산자로 변수, 함수, 매개변수를 삭제하면 `SyntaxError`가 발생한다.
+
+#### 3. 매개변수 이름의 중복
+
+- 중복된 매개변수 이름을 사용하면 `SyntaxError`가 발생한다.
+
+#### 4. with 문의 사용
+
+- with 문을 사용하면 `SyntaxError`가 발생한다.
+- with 문은 전달된 객체를 스코프 체인에 추가한다. 이로 인해 코드가 간단해지는 효과가 있지만 성능과 가독성이 나빠지는 문제가 있어 사용하지 않는 것이 좋다.
+
 ### 20.6 strict mode 적용에 의한 변화
+
+#### 1. 일반 함수의 this
+
+- strict mode에서 함수를 일반 함수로서 호출하면 this에 undefined가 바인딩된다.
+- 생성자 함수가 아닌 일반 함수 내부에서는 thi를 사용할 필요가 없기 때문이다.
+- 이때 에러는 발생하지 않는다.
+
+#### 2. arguments 객체
+
+- strict mode에서는 매개변수에 전달된 인수를 재할당하여 변경해도 arguments 객체에 반영되지 않는다.
