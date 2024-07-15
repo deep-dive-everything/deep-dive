@@ -187,9 +187,9 @@
 ## 34.5 이터레이션 프로토콜의 중요성
 
 - 이터레이터 프로토콜은 다양한 데이터 공급자가 하나의 순회 방식을 갖도록 규정. 데이터 소비자가 효율적으로 다양한 데이터 공급자를 사용할 수 있도록 데이터 소비자와 데이터 공급자를 연결하는 인터페이스 역할을 함
-    
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7d5bae4c-3419-4df1-a2d1-d33c9f921884/02b4c8f3-bea7-41ac-9ced-cfa5ab25fc24/Untitled.png)
-    
+   
+    ![image](https://github.com/user-attachments/assets/af61069c-fa38-46ff-9509-cef0770e2bdb)
+
 
 # 35장 - 스프레드 문법(ES6)
 
@@ -301,7 +301,7 @@ foo(...[1,2,3]);
 
 ### 35.2.4 이터러블을 배열로 변환
 
-- ES5에서 티어러블을 배열로 변환하려면 Function.prototype.apply 또는 [Function.prototype.call](http://Function.prototype.call) 메서드를 사용해서 slice 메서드를 호출해야해ㅔㅆ음
+- ES5에서 티어러블을 배열로 변환하려면 Function.prototype.apply 또는 [Function.prototype.call](http://Function.prototype.call) 메서드를 사용해서 slice 메서드를 호출해야했음
     
     하지만 스프레드 문법을 사용하면 더 간결하게 처리 가능
     
