@@ -114,3 +114,104 @@
 - defer
   - 자바스크립트 파싱과 실행은 HTML 파싱이 완료된 직후, 즉 DOM 생성이 완료된 직후 진행된다.
   - DOM 생성이 완료된 이후 실행되어야 할 자바스크립트에 유용하다.
+
+## 39장 DOM
+
+> [!NOTE]
+>
+> **DOM은 HTML 문서의 계층적 구조와 정보를 표현하며 이를 제어할 수 있는 API, 즉 프로퍼티와 메서드를 제공하는 트리 자료구조다.**
+
+### 39.1 노드
+
+> [!NOTE]
+> DOM을 구성하는 기본 단위
+
+#### 39.1.1 HTML 요소와 노드 객체
+
+- HTML 요소는 HTML 문서를 구성하는 개별적인 요소를 의미한다.
+- HTML 요소는 렌더링 엔진에 의해 파싱되어 DOM을 구성하는 요소 노드 객체로 변환된다.
+  - 어트리뷰트 -> 어트리뷰트 노드
+  - 텍스트 콘텐츠 -> 텍스트 노드
+- 트리 자료구조
+  - 부모 노드와 자식 노드로 구성되어 노드 간의 계층적 구조를 표현하는 비선형 자료구조
+  - 루트 노드: 최상위 노드. 트리 자료구조의 시작이며 0개 이상의 자식 노드를 갖음.
+  - 리프 노드: 자식 노드가 없는 노드
+  - DOM: 노드 객체의 트리로 구조화되어 있기 때문에 **DOM 트리**라고 부르기도 한다.
+
+#### 39.1.2 노드 객체의 타입
+
+- DOM은 노드 객체의 계층적인 구조로 구성되며, 노드 객체는 종류가 있고 상속 구조를 갖는다.
+- 노드 객체는 총 12개의 종류(노드 타입)가 있다.
+- 문서 노드(document node)
+  - DOM 트리의 루트 노드로, docuement 객체
+  - DOM 트리의 노드들에 접근하기 위한 진입점 역할을 담당
+- 요소 노드(element node)
+  - HTML 요소를 가리키는 객체이며, 문서의 구조를 표현
+- 어트리뷰트 노드(attribute node)
+  - HTML 요소의 어트리뷰트를 나타내는 객체
+  - 부모 노드와 연결되어 있지 않기 때문에 어트리뷰트 노드에 접근하여 어트리뷰트를 참조하거나 변경하려면 먼저 요소 노드에 접근해야 함
+- 텍스트 노드(text node)
+  - HTML 요소의 텍스트를 나타내는 객체이며, 문서의 정보를 표현
+  - 요소 노드의 자식 노드이며, 자식 노드를 가질 수 없는 리프 노드
+  - 텍스트 노드는 DOM 트리의 최종단이므로 텍스트 노드에 접근하려면 먼저 부모 노드인 요소 노드에 접근해야 함
+
+#### 39.1.3 노드 객체의 상속 구조
+
+- DOM을 구성하는 노드 객체는 브라우저 환경에서 추가적으로 제공하는 호스트 객체이자 자바스크립트의 객체이므로 프로토타입에 의한 상속 구조를 갖는다.
+- 노드 객체의 상속 구조
+  - 노드 구조 -> Object, EventTarget, Node 인터페이스
+  - 문서 노드 -> Document, HTMLDocument 인터페이스
+  - 어트리뷰트 노드 -> Attr
+  - 텍스트 노드 -> CharacterDate 인터페이스
+  - 요소 노드
+    - Element 인터페이스
+    - 추가적으로 HTMLElement와 태그의 종류별로 세분화된 HTMLHtmlElement, HTMLHeadElement, HTMLBodyElement, HTMLUListElement 등의 인터페이스
+- DOM은 HTML 문서의 계층적 구조와 정보를 표현하는 것은 물론 노드 객체의 종류, 즉 노드 타입에 따라 필요한 기능을 프로퍼티와 메서드의 집합인 DOM API로 제공한다.
+- 이 DOM API를 통해 HTML의 구조나 내용 또는 스타일 등을 동적으로 조작할 수 있다.
+
+### 39.2 요소 노드 취득
+
+#### id를 이용한 요소 노드 취득
+
+- Document.prototype.getElementById
+- getElementById 메서드는 Document.prototype의 프로퍼티이므로, 반드시 문서 노드 document를 통해 호출해야 한다.
+- id 값은 HTML 문서 내에서 유일한 값이어야 하지만 중복된 id 값을 갖는 HTML 요소가 여러 개 존재하더라도 에러를 발생시키지 않는다.
+
+#### 태그 이름을 이요한 요소 노드 취득
+
+- Document.prototype/Element.prototype.getElementsByTagName
+- 인수로 전달한 태그 이름을 갖는 모든 요소 노드들을 탐색해 여러 개의 요소 노드 객체를 갖는 DOM 컬렉션 객체인 HTMLCollection 객체를 반환한다.
+- HTMLCollection 객체는 유사 배열 객체이면서 이터러블이다.
+
+#### class를 이용한 요소 노드 취득
+
+- Document.prototype/Element.prototype.getElementByClassName
+- 인수로 전달한 class 어트리뷰트 값을 갖는 모든 요소 노드들을 탐색해 HTMLCollection 객체로 반환한다.
+
+#### CSS 선택자를 이용한 요소 노드 취득
+
+- Document.prototype/Element.prototype.querySelector
+  - 인수로 전달한 CSS 선택자를 만족시키는 하나의 요소 노드를 탐색해 반환한다.
+  - 만족시키는 요소 노드가 여러 개면 첫 번째 요소 노드만 반환
+  - 존재하지 않는 경우 null 반환
+  - 문법에 맞지 않는 경우 DOMException 에러
+- Document.prototype/Element.prototype.querySelectorAll
+  - 인수로 전달한 CSS 선택자를 만족시키는 모든 요소 노드를 NodeList 객체로 반환한다.
+  - NodeList 객체는 유사 배열 객체이면서 이터러블이다.
+  - 인수로 전달된 CSS 선택자를 만족시키는 요소가 존재하지 않는 경우 빈 NodeList 객체 반환
+  - 문법에 맞지 않는 경우 DOMException 에러
+  - 인수로 '\*' 전달하면 전체 선택
+
+### 39.3 노드 탐색
+
+### 39.4 노드 정보 취득
+
+### 39.5 요소 노드의 텍스트 조작
+
+### 39.6 DOM 조작
+
+### 39.7 어트리뷰트
+
+### 39.8 스타일
+
+### 39.9 DOM 표준
