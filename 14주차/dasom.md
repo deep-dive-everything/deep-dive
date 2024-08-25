@@ -1,4 +1,4 @@
-# Morden JavaScript Deep Dive
+# Modern JavaScript Deep Dive
 
 Dasom, 2024.08.25
 
