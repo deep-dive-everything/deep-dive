@@ -59,10 +59,110 @@
 <td align="center" colspan="5">3주차</td>
 </tr>
 <tr>
-<td align="center">6/2(월)</td>
+<td align="center">6/2(일)</td>
 <th align="left">12장~15장</th>
 <td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/3%EC%A3%BC%EC%B0%A8">정리</a></td>
 <td>권현경</td>
+</tr>
+
+<tr>
+<td align="center" colspan="5">4주차</td>
+</tr>  
+<tr>
+<td align="center">6/9(일)</td>
+<th align="left">16장~18장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/4%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>고석영</td>
+</tr>
+<tr>
+<td align="center" colspan="5">5주차</td>
+</tr>
+<tr>
+<td align="center">6/16(일)</td>
+<th align="left">19장~20장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/5%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>김해리</td>
+</tr>
+<tr>
+<td align="center" colspan="5">6주차</td>
+</tr>
+<tr>
+<td align="center">6/23(일)</td>
+<th align="left">21장~24장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/6%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>권현경</td>
+</tr>
+<tr>
+<td align="center" colspan="5">7주차</td>
+</tr>
+<tr>
+<td align="center">6/30(일)</td>
+<th align="left">25장~26장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/7%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>이여진</td>
+</tr>
+<tr>
+<td align="center" colspan="5">8주차</td>
+</tr>
+<tr>
+<td align="center">7/7(일)</td>
+<th align="left">27장~32장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/8%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>전원</td>
+</tr>
+<tr>
+<td align="center" colspan="5">9주차</td>
+</tr>
+<tr>
+<td align="center">7/14(일)</td>
+<th align="left">33장~37장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/9%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>고석영</td>
+</tr>
+<tr>
+<td align="center" colspan="5">10주차</td>
+</tr>
+<tr>
+<td align="center">7/21(일)</td>
+<th align="left">38장~39장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/10%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>박결</td>
+</tr>
+<tr>
+<td align="center" colspan="5">11주차</td>
+</tr>
+<tr>
+<td align="center">7/28(일)</td>
+<th align="left">40장~41장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/11%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>김해리</td>
+</tr>
+<tr>
+<td align="center" colspan="5">12주차</td>
+</tr>
+<tr>
+<td align="center">8/4(일)</td>
+<th align="left">42장~44장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/12%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>권현경</td>
+</tr>
+<tr>
+<td align="center" colspan="5">13주차</td>
+</tr>
+<tr>
+<td align="center">8/11(일)</td>
+<th align="left">45장~47장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/13%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>박결</td>
+</tr>
+<tr>
+<td align="center" colspan="5">14주차</td>
+</tr>
+<tr>
+<td align="center">8/25(일)</td>
+<th align="left">48장~49장</th>
+<td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/14%EC%A3%BC%EC%B0%A8">정리</a></td>
+<td>박다솜</td>
 </tr>
 
 </tbody>
