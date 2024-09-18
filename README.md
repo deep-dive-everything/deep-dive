@@ -164,10 +164,41 @@
 <td><a href="https://github.com/deep-dive-everything/deep-dive/tree/main/14%EC%A3%BC%EC%B0%A8">정리</a></td>
 <td>박다솜</td>
 </tr>
-
 </tbody>
 </table>
 
 <br />
+
+
+## 🫡 스터디원 
+
+<table>
+<tbody>
+<tr>
+<td align="center"><img src="./assets/도치망곰.png" width="120" /></td>
+<td align="center"><img src="./assets/토끼망곰.png" width="120" /></td>
+<td align="center"><img src="./assets/개굴망곰.jpg" width="120" /></td>
+<td align="center"><img src="./assets/회사원망곰.png" width="120" /></td>
+<td align="center"><img src="./assets/수영망곰.jpg" width="120" /></td>
+<td align="center"><img src="./assets/수박망곰.jpg" width="120" /></td>
+</tr>
+<tr>
+<th align="center">고석영</th>
+<th align="center">권현경</th>
+<th align="center">김해리</th>
+<th align="center">박결</th>
+<th align="center">박다솜</th>
+<th align="center">이여진</th>
+</tr>
+<tr>
+<td align="center" width="120"><a href="https://github.com/kwonhygge">@kwonhygge</a></td>
+<td align="center" width="120"><a href="https://github.com/samseburn">@samseburn</a></td>
+<td align="center" width="120"><a href="https://github.com/frogk">@frogk</a></td>
+<td align="center" width="120"><a href="https://github.com/hotdog1004">@hotdog1004</a></td>
+<td align="center" width="120"><a href="https://github.com/devsomda">@devsomda</a></td>
+<td align="center" width="120"><a href="https://github.com/limejin">@limejin</a></td>
+</tr>
+</tbody>
+</table>
 
 </div>
