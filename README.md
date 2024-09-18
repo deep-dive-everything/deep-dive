@@ -191,8 +191,8 @@
 <th align="center">이여진</th>
 </tr>
 <tr>
-<td align="center" width="120"><a href="https://github.com/kwonhygge">@kwonhygge</a></td>
 <td align="center" width="120"><a href="https://github.com/samseburn">@samseburn</a></td>
+<td align="center" width="120"><a href="https://github.com/kwonhygge">@kwonhygge</a></td>
 <td align="center" width="120"><a href="https://github.com/frogk">@frogk</a></td>
 <td align="center" width="120"><a href="https://github.com/hotdog1004">@hotdog1004</a></td>
 <td align="center" width="120"><a href="https://github.com/devsomda">@devsomda</a></td>
